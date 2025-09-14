@@ -1,12 +1,13 @@
+import { useRef } from 'react';
 import './App.css';
 import Item from './components/Item';
 import OrderDetails from './components/OrderDetails';
 import ProductSkeleton from './components/ProductSkeleton';
+import OrderDetailsSkeleton from './components/OrderDetailsSkeleton';
 import { useShop } from './hooks/useShop';
 
-
 function App() {
-  const shopName = "Gunther's Shop Made with React JS";
+  const shopName = "Gunther's Jersey Shop";
   const { 
     items, 
     loading, 
@@ -15,36 +16,43 @@ function App() {
     selectHandler, 
     quantityHandler, 
     removeFromBag,
-    clearBag
+    clearBag // Agora o clearBag vem diretamente do hook useShop
   } = useShop();
+
+  const appContainerRef = useRef(null);
 
   if (error) {
     return (
       <div className="app-error">
-        <h2>Oops! Something went wrong</h2>
-        <p>{error}</p>
-        <button onClick={() => window.location.reload()}>Try Again</button>
+        <div className="error-content">
+          <h2>Oops! Something went wrong</h2>
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>Try Again</button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="app-container">
+    <div className="app-container" ref={appContainerRef}>
       <header className="app-header">
-        <h1>{shopName}</h1>
-        {bagItems.length > 0 && (
-          <div className="bag-indicator">
-            <span>{bagItems.length} item{bagItems.length !== 1 ? 's' : ''} in bag</span>
-          </div>
-        )}
+        <div className="header-content">
+          <h1>{shopName}</h1>
+          {bagItems.length > 0 && (
+            <div className="bag-indicator">
+              <span className="bag-count">{bagItems.length}</span>
+              <span>item{bagItems.length !== 1 ? 's' : ''} in bag</span>
+            </div>
+          )}
+        </div>
       </header>
 
       <main>
         <section className="items">
-          <h2 className="items-title">Check out the best team shirts</h2>
+          <h2 className="items-title">Premium Football Jerseys</h2>
           <div className="items-grid">
             {loading
-              ? Array.from({ length: 6 }).map((_, i) => <ProductSkeleton key={i} />)
+              ? Array.from({ length: 8 }).map((_, i) => <ProductSkeleton key={i} />)
               : items.map(item => (
                   <Item
                     key={item.id}
@@ -57,19 +65,19 @@ function App() {
           </div>
         </section>
 
-        {bagItems.length > 0 ? (
+        {loading ? (
+          <OrderDetailsSkeleton />
+        ) : bagItems.length > 0 ? (
           <OrderDetails 
             itemsInBag={bagItems} 
             removeFromBag={removeFromBag} 
             clearBag={clearBag} 
           />
-        ) : loading ? (
-          <div className="empty-cart">
-            <p>Your cart is loading...</p>
-          </div>
         ) : (
           <div className="empty-cart">
-            <p>🛒 Your cart is empty, choose a shirt to get started!</p>
+            <div className="empty-cart-icon">🛒</div>
+            <h3>Your cart is empty</h3>
+            <p>Choose a jersey to get started!</p>
           </div>
         )}
       </main>

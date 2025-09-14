@@ -105,6 +105,7 @@ export const useShop = () => {
     selectHandler,
     quantityHandler,
     removeFromBag,
-    clearBag
+    clearBag,
+    setBagItems
   };
 };

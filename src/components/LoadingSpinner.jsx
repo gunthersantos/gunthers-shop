@@ -1,10 +1,14 @@
-import Spinner from 'react-bootstrap/Spinner';
+function LoadingSpinner({ size = "medium" }) {
+  const sizeClass = {
+    small: "spinner-small",
+    medium: "spinner-medium",
+    large: "spinner-large"
+  }[size];
 
-function LoadingSpinner() {
   return (
-    <Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>
+    <div className={`spinner ${sizeClass}`}>
+      <div className="spinner-inner"></div>
+    </div>
   );
 }
 
