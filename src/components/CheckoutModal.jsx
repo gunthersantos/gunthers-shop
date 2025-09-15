@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Loader } from "lucide-react"; // Certifique-se de usar apenas ícones existentes
+import { X, Loader } from "lucide-react";
 
 function CheckoutModal({ items, total, onClose, onConfirm }) {
   const [name, setName] = useState("");
@@ -11,6 +11,7 @@ function CheckoutModal({ items, total, onClose, onConfirm }) {
     e.preventDefault();
     setProcessing(true);
 
+    // Simular processamento e depois chamar onConfirm
     setTimeout(() => {
       onConfirm({ name, address, email, items, total });
       setProcessing(false);

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import CheckoutModal from "./CheckoutModal";
-import { ShoppingBag, AlertCircle } from "lucide-react"; // Ícones válidos
+import { ShoppingBag, AlertCircle } from "lucide-react";
 
 function OrderDetails({ itemsInBag, removeFromBag, clearBag }) {
   const [checkoutOpen, setCheckoutOpen] = useState(false);

@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import './App.css';
 import Item from './components/Item';
 import OrderDetails from './components/OrderDetails';
 import ProductSkeleton from './components/ProductSkeleton';
 import OrderDetailsSkeleton from './components/OrderDetailsSkeleton';
 import { useShop } from './hooks/useShop';
+import { Search } from 'lucide-react';
 
 function App() {
   const shopName = "Gunther's Jersey Shop";
@@ -16,10 +17,23 @@ function App() {
     selectHandler, 
     quantityHandler, 
     removeFromBag,
-    clearBag // Agora o clearBag vem diretamente do hook useShop
+    clearBag
   } = useShop();
 
+  const [darkMode, setDarkMode] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const appContainerRef = useRef(null);
+
+  // Filtrar itens baseado no termo de pesquisa
+  const filteredItems = items.filter(item => 
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    document.body.classList.toggle('dark-mode', newDarkMode);
+  };
 
   if (error) {
     return (
@@ -34,16 +48,37 @@ function App() {
   }
 
   return (
-    <div className="app-container" ref={appContainerRef}>
+    <div className={`app-container ${darkMode ? 'dark-mode' : ''}`} ref={appContainerRef}>
       <header className="app-header">
         <div className="header-content">
           <h1>{shopName}</h1>
-          {bagItems.length > 0 && (
-            <div className="bag-indicator">
-              <span className="bag-count">{bagItems.length}</span>
-              <span>item{bagItems.length !== 1 ? 's' : ''} in bag</span>
+          <div className="header-controls">
+            <div className="search-container">
+              <Search size={18} className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search jerseys..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
             </div>
-          )}
+            <div className="header-right">
+              {bagItems.length > 0 && (
+                <div className="bag-indicator">
+                  <span className="bag-count">{bagItems.length}</span>
+                  <span>item{bagItems.length !== 1 ? 's' : ''} in bag</span>
+                </div>
+              )}
+              <button onClick={toggleDarkMode} className="dark-mode-toggle">
+                <img 
+                  src="/src/assets/dark-theme.svg" 
+                  alt="Dark mode toggle" 
+                  className="dark-mode-icon"
+                />
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -53,7 +88,7 @@ function App() {
           <div className="items-grid">
             {loading
               ? Array.from({ length: 8 }).map((_, i) => <ProductSkeleton key={i} />)
-              : items.map(item => (
+              : filteredItems.map(item => (
                   <Item
                     key={item.id}
                     item={item}
@@ -63,6 +98,11 @@ function App() {
                   />
                 ))}
           </div>
+          {!loading && filteredItems.length === 0 && (
+            <div className="no-results">
+              <p>No jerseys found matching "{searchTerm}"</p>
+            </div>
+          )}
         </section>
 
         {loading ? (
@@ -83,7 +123,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>&copy; 2025 Gunther's Shop. All rights reserved.</p>
+        <p>&copy; 2025 Gunther's Jersey Shop. All rights reserved.</p>
       </footer>
     </div>
   );
