@@ -1,6 +1,10 @@
 # Gunther's Shop
 
 A modern e-commerce web application built with React, allowing users to browse team shirts, add them to a cart, adjust quantities, and complete a checkout process with a modal interface. Features a responsive design, local storage for cart persistence, and a clean, user-friendly UI.
+## Image 
+<img width="583" height="592" alt="image" src="https://github.com/user-attachments/assets/ab47c5a8-2fed-4690-80cc-d8b6a344508c" />
+<img width="583" height="595" alt="image" src="https://github.com/user-attachments/assets/46deca96-d39a-47a7-bc1e-2db953ed89dd" />
+
 
 ## Table of Contents
 - [Features](#features)
