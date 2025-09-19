@@ -71,11 +71,12 @@ function App() {
                 </div>
               )}
               <button onClick={toggleDarkMode} className="dark-mode-toggle">
-                <img 
+{/*                 <img 
                   src="./assets/dark-theme.svg" 
                   alt="Dark mode toggle" 
                   className="dark-mode-icon"
-                />
+                /> */}
+                <span class="material-symbols-outlined">dark_mode</span>
               </button>
             </div>
           </div>
