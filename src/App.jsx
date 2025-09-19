@@ -70,10 +70,9 @@ function App() {
                   <span>item{bagItems.length !== 1 ? 's' : ''} in bag</span>
                 </div>
               )}
-{/*               <button onClick={toggleDarkMode} className="dark-mode-toggle"> */}
-              <button onClick={toggleDarkMode} className="material-symbols-outlined">
+              <button onClick={toggleDarkMode} className="dark-mode-toggle">
                 <img 
-                  src="/src/assets/dark-theme.svg" 
+                  src="./src/assets/dark-theme.svg" 
                   alt="Dark mode toggle" 
                   className="dark-mode-icon"
                 />
