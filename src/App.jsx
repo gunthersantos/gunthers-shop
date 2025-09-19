@@ -72,7 +72,7 @@ function App() {
               )}
               <button onClick={toggleDarkMode} className="dark-mode-toggle">
                 <img 
-                  src="./src/assets/dark-theme.svg" 
+                  src="./assets/dark-theme.svg" 
                   alt="Dark mode toggle" 
                   className="dark-mode-icon"
                 />
